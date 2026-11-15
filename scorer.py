@@ -7,8 +7,13 @@ import modal
 
 MODEL = "Qwen/Qwen3-4B-Base"
 REVISION = "906bfd4b4dc7f14ee4320094d8b41684abff8539"
-# Public verification key only. The signing key stays in Val Town's database.
-PUBLIC_KEY = "x8TbzZb5PYPLXCOPttLsEQUkjfVi87ExdG2X2vRFwfU"
+# Public verification keys only. The signing key lives in Alchemy's state
+# (alchemy.run.ts prints scorerPublicKey). The first key is the old Val Town
+# app's; drop it once surprisal.val.run is gone.
+PUBLIC_KEYS = [
+    "x8TbzZb5PYPLXCOPttLsEQUkjfVi87ExdG2X2vRFwfU",
+    "lhrojr4GeMcf-0hNTKqZO5d8eJZNci0LjnVF1VqksKk",
+]
 # How many of the model's guesses to return for each token.
 GUESSES = 5
 app = modal.App("surprisal-scorer")
@@ -80,8 +85,16 @@ def web():
     from fastapi.responses import JSONResponse
     from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
     server = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
-    key = Ed25519PublicKey.from_public_bytes(base64.urlsafe_b64decode(PUBLIC_KEY + "="))
+    keys = [Ed25519PublicKey.from_public_bytes(base64.urlsafe_b64decode(k + "="))
+            for k in PUBLIC_KEYS]
     used = {}
+
+    def verifies(key, signature, raw):
+        try:
+            key.verify(signature, raw)
+            return True
+        except Exception:
+            return False
 
     @server.post("/surprisal")
     async def surprisal(request: Request):
@@ -89,7 +102,9 @@ def web():
         if len(raw) > 25000:
             return JSONResponse({"error": "Request too large"}, 413)
         try:
-            key.verify(base64.b64decode(request.headers.get("x-signature", "")), raw)
+            signature = base64.b64decode(request.headers.get("x-signature", ""))
+            if not any(verifies(key, signature, raw) for key in keys):
+                raise ValueError("bad signature")
             data = json.loads(raw)
             if abs(time.time() - data["timestamp"]) > 60:
                 raise ValueError("expired")
