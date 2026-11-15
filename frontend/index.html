@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    >
+    <title>Surprisal — write away from the expected</title>
+    <!-- Installable from the Home Screen, where Safari's bars go away. -->
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="icon" type="image/png" href="/icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Surprisal">
+    <meta name="theme-color" content="#f7f7f2">
+    <link rel="stylesheet" href="/frontend/styles.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "@codemirror/state": "https://esm.sh/@codemirror/state@6.7.6",
+          "@codemirror/view": "https://esm.sh/@codemirror/view@6.43.13?external=@codemirror/state",
+          "@codemirror/language": "https://esm.sh/@codemirror/language@6.13.1?external=@codemirror/state,@codemirror/view,@lezer/common,@lezer/highlight",
+          "@lezer/common": "https://esm.sh/@lezer/common@1.5.5",
+          "@lezer/highlight": "https://esm.sh/@lezer/highlight@1.2.5?external=@lezer/common"
+        }
+      }
+    </script>
+    <script src="https://esm.town/v/std/catch"></script>
+  </head>
+  <body>
+    <div id="root" data-source-url="https://www.val.town/x/kamalnrf/surprisal">
+      <p id="boot">
+        Opening your writing… If this stays here, reload or check your
+        connection. Your saved text has not been changed.
+      </p>
+    </div>
+    <script type="module" src="/frontend/index.tsx"></script>
+  </body>
+</html>

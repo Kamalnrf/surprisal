@@ -1,0 +1,13 @@
+.git
+.vscode
+.zed
+.cursorrules
+.DS_Store
+node_modules
+vendor
+.amp
+.agents
+.claude
+dev.ts
+test.ts
+**/*.test.ts
