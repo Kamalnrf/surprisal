@@ -1,6 +1,5 @@
-/** @jsxImportSource https://esm.sh/react@19.3.0 */
-import React, { useEffect, useState } from "https://esm.sh/react@19.3.0";
-import { Dialog } from "https://esm.sh/@base-ui/react@1.9.0/dialog?deps=react@19.3.0,react-dom@19.3.0";
+import React, { useEffect, useState } from "react";
+import { Dialog } from "@base-ui/react/dialog";
 import JevKeySettings from "../JevKeySettings/index.ts";
 import Onboarding from "../Onboarding/index.ts";
 import Workspace from "./Workspace.tsx";

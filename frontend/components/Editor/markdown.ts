@@ -5,22 +5,22 @@ import {
   type EditorState,
   type Range,
   StateField,
-} from "https://esm.sh/@codemirror/state@6.7.6";
+} from "@codemirror/state";
 import {
   Decoration,
   type DecorationSet,
   EditorView,
   WidgetType,
-} from "https://esm.sh/@codemirror/view@6.43.13?external=@codemirror/state";
+} from "@codemirror/view";
 import {
   HighlightStyle,
   syntaxHighlighting,
-} from "https://esm.sh/@codemirror/language@6.13.1?external=@codemirror/state,@codemirror/view,@lezer/common,@lezer/highlight";
-import { tags } from "https://esm.sh/@lezer/highlight@1.2.5?external=@lezer/common";
+} from "@codemirror/language";
+import { tags } from "@lezer/highlight";
 import {
   markdown,
   markdownLanguage,
-} from "https://esm.sh/@codemirror/lang-markdown@6.5.2?external=@codemirror/state,@codemirror/view,@codemirror/language,@lezer/common,@lezer/highlight";
+} from "@codemirror/lang-markdown";
 
 const style = HighlightStyle.define([
   { tag: tags.heading, class: "md-heading" },

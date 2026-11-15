@@ -1,13 +1,12 @@
-/** @jsxImportSource https://esm.sh/react@19.3.0 */
 import React, {
   useEffect,
   useEffectEvent,
   useLayoutEffect,
   useRef,
   useState,
-} from "https://esm.sh/react@19.3.0";
-import { Button } from "https://esm.sh/@base-ui/react@1.9.0/button?deps=react@19.3.0,react-dom@19.3.0";
-import { Drawer } from "https://esm.sh/@base-ui/react@1.9.0/drawer?deps=react@19.3.0,react-dom@19.3.0";
+} from "react";
+import { Button } from "@base-ui/react/button";
+import { Drawer } from "@base-ui/react/drawer";
 import Editor, {
   type EditorHandle,
   type EditorSnapshot,

@@ -3,7 +3,7 @@ import {
   useMemo,
   useRef,
   useState,
-} from "https://esm.sh/react@19.3.0";
+} from "react";
 import { AnalysisError, askJev } from "../helpers/jev.ts";
 import { cacheDelete, cacheGet, cacheSet } from "../helpers/cache.ts";
 import { requestKey } from "../../shared/stream.ts";

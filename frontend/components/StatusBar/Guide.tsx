@@ -1,7 +1,6 @@
-/** @jsxImportSource https://esm.sh/react@19.3.0 */
-import React, { useState } from "https://esm.sh/react@19.3.0";
-import { Button } from "https://esm.sh/@base-ui/react@1.9.0/button?deps=react@19.3.0,react-dom@19.3.0";
-import { Collapsible } from "https://esm.sh/@base-ui/react@1.9.0/collapsible?deps=react@19.3.0,react-dom@19.3.0";
+import React, { useState } from "react";
+import { Button } from "@base-ui/react/button";
+import { Collapsible } from "@base-ui/react/collapsible";
 import { BREAK, GUIDE } from "../../../shared/stream.ts";
 import {
   clearWriting,

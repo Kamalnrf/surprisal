@@ -1,4 +1,4 @@
-import { H3 } from "https://esm.sh/h3@2.0.2";
+import { H3 } from "h3";
 import { analyzeRequest } from "./routes/analysis.ts";
 import { surprisalRequest } from "./routes/surprisal.ts";
 

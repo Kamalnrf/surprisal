@@ -5,11 +5,11 @@ import {
   StateEffect,
   StateField,
   type TransactionSpec,
-} from "https://esm.sh/@codemirror/state@6.7.6";
+} from "@codemirror/state";
 import {
   invertedEffects,
   isolateHistory,
-} from "https://esm.sh/@codemirror/commands@6.11.1?external=@codemirror/state,@codemirror/view";
+} from "@codemirror/commands";
 import {
   applyTextEdits,
   documentFromText,
@@ -22,7 +22,7 @@ import {
   layer,
   RectangleMarker,
   WidgetType,
-} from "https://esm.sh/@codemirror/view@6.43.13?external=@codemirror/state";
+} from "@codemirror/view";
 import { visibleGroups } from "../../../shared/variants.ts";
 import { streamFocus } from "../../../shared/stream.ts";
 

@@ -1,5 +1,4 @@
-/** @jsxImportSource https://esm.sh/react@19.3.0 */
-import React from "https://esm.sh/react@19.3.0";
+import React from "react";
 import { AUTOPILOT_P, type WordReading } from "../../../shared/surprisal.ts";
 
 /** What the model expected where the writer put `word`. */

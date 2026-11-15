@@ -1,9 +1,8 @@
-/** @jsxImportSource https://esm.sh/react@19.3.0 */
-import React from "https://esm.sh/react@19.3.0";
-import { Button } from "https://esm.sh/@base-ui/react@1.9.0/button?deps=react@19.3.0,react-dom@19.3.0";
-import { Checkbox } from "https://esm.sh/@base-ui/react@1.9.0/checkbox?deps=react@19.3.0,react-dom@19.3.0";
-import { Popover } from "https://esm.sh/@base-ui/react@1.9.0/popover?deps=react@19.3.0,react-dom@19.3.0";
-import { SlidersHorizontalIcon } from "https://esm.sh/@phosphor-icons/react@2.1.10/dist/csr/SlidersHorizontal?deps=react@19.3.0,react-dom@19.3.0";
+import React from "react";
+import { Button } from "@base-ui/react/button";
+import { Checkbox } from "@base-ui/react/checkbox";
+import { Popover } from "@base-ui/react/popover";
+import { SlidersHorizontalIcon } from "@phosphor-icons/react/dist/csr/SlidersHorizontal";
 
 export interface WritingSettingsProps {
   open: boolean;

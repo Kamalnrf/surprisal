@@ -1,4 +1,4 @@
-import { useEffect, useSyncExternalStore } from "https://esm.sh/react@19.3.0";
+import { useEffect, useSyncExternalStore } from "react";
 import { writingStore } from "../stores/writing.ts";
 
 export default function useWriting() {

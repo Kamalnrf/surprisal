@@ -1,4 +1,4 @@
-import { sqlite } from "https://esm.town/v/std/sqlite/main.ts";
+import { env } from "cloudflare:workers";
 import type { SurprisalResult } from "../shared/types.ts";
 
 // The scorer is a GPU on Modal; every call costs money, so the public
@@ -18,16 +18,12 @@ async function allow() {
   const now = Date.now();
   const name = "surprisal:" + new Date(now).toISOString().slice(0, 10);
   // One conditional statement, so simultaneous requests cannot both pass.
-  const counted = await sqlite.execute({
-    sql:
-      "INSERT INTO allowance (name, calls, last_ms) VALUES (?, 1, ?) ON CONFLICT(name) DO UPDATE SET calls = calls + 1, last_ms = excluded.last_ms WHERE allowance.calls < ? AND excluded.last_ms - allowance.last_ms >= ?",
-    args: [name, now, DAILY_CALLS, MIN_GAP_MS],
-  });
-  if (counted.rowsAffected) return;
-  const row = (await sqlite.execute({
-    sql: "SELECT calls FROM allowance WHERE name = ?",
-    args: [name],
-  })).rows[0];
+  const counted = await env.DB.prepare(
+    "INSERT INTO allowance (name, calls, last_ms) VALUES (?, 1, ?) ON CONFLICT(name) DO UPDATE SET calls = calls + 1, last_ms = excluded.last_ms WHERE allowance.calls < ? AND excluded.last_ms - allowance.last_ms >= ?",
+  ).bind(name, now, DAILY_CALLS, MIN_GAP_MS).run();
+  if (counted.meta.changes) return;
+  const row = await env.DB.prepare("SELECT calls FROM allowance WHERE name = ?")
+    .bind(name).first();
   throw new ScorerError(
     Number(row?.calls) >= DAILY_CALLS
       ? "Surprisal has used today's allowance. Writing is unaffected."
@@ -38,20 +34,20 @@ async function allow() {
 
 /** Signs the request with the key whose public half is pinned in scorer.py. */
 export async function surprisal(text: string): Promise<SurprisalResult> {
-  const endpoint = Deno.env.get("SCORER_URL");
+  const endpoint = env.SCORER_URL;
   if (!endpoint) throw new ScorerError("The surprisal scorer is not set up.");
   await allow();
-  if (!signingKey) {
-    const row =
-      (await sqlite.execute("SELECT private FROM identity WHERE id=1")).rows[0];
-    signingKey = await crypto.subtle.importKey(
-      "jwk",
-      JSON.parse(String(row.private)),
-      "Ed25519",
-      false,
-      ["sign"],
-    );
-  }
+  // A PEM pkcs8 key that Alchemy generates once and keeps in its state.
+  signingKey ??= await crypto.subtle.importKey(
+    "pkcs8",
+    Uint8Array.from(
+      atob(env.SIGNING_KEY.replace(/-----[^-]+-----|\s/g, "")),
+      (c) => c.charCodeAt(0),
+    ),
+    "Ed25519",
+    false,
+    ["sign"],
+  );
   const body = JSON.stringify({
     text,
     timestamp: Date.now() / 1000,

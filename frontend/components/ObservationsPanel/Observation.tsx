@@ -1,5 +1,4 @@
-/** @jsxImportSource https://esm.sh/react@19.3.0 */
-import React from "https://esm.sh/react@19.3.0";
+import React from "react";
 import type { Observation as Finding, Rule } from "../../../shared/types.ts";
 
 export default function Observation(

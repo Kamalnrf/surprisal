@@ -1,11 +1,10 @@
-/** @jsxImportSource https://esm.sh/react@19.3.0 */
 import React, {
   useLayoutEffect,
   useRef,
   useState,
-} from "https://esm.sh/react@19.3.0";
-import { Button } from "https://esm.sh/@base-ui/react@1.9.0/button?deps=react@19.3.0,react-dom@19.3.0";
-import { Popover } from "https://esm.sh/@base-ui/react@1.9.0/popover?deps=react@19.3.0,react-dom@19.3.0";
+} from "react";
+import { Button } from "@base-ui/react/button";
+import { Popover } from "@base-ui/react/popover";
 import type { EditorHandle } from "../Editor/Editor.types.ts";
 import {
   renderDocument,

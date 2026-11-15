@@ -8,12 +8,12 @@ import {
   StateField,
   type Transaction,
   type TransactionSpec,
-} from "https://esm.sh/@codemirror/state@6.7.6";
+} from "@codemirror/state";
 import {
   EditorView,
   keymap,
-} from "https://esm.sh/@codemirror/view@6.43.13?external=@codemirror/state";
-import { syntaxTree } from "https://esm.sh/@codemirror/language@6.13.1?external=@codemirror/state,@codemirror/view,@lezer/common,@lezer/highlight";
+} from "@codemirror/view";
+import { syntaxTree } from "@codemirror/language";
 
 type Spec = TransactionSpec;
 

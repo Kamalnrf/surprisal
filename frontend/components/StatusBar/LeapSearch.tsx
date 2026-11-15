@@ -1,6 +1,5 @@
-/** @jsxImportSource https://esm.sh/react@19.3.0 */
-import React, { useEffect, useRef } from "https://esm.sh/react@19.3.0";
-import { Input } from "https://esm.sh/@base-ui/react@1.9.0/input?deps=react@19.3.0,react-dom@19.3.0";
+import React, { useEffect, useRef } from "react";
+import { Input } from "@base-ui/react/input";
 import type { EditorHandle, Leap } from "../Editor/index.ts";
 
 export interface LeapSearchProps {

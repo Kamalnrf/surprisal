@@ -1,9 +1,8 @@
-/** @jsxImportSource https://esm.sh/react@19.3.0 */
-import React, { useState } from "https://esm.sh/react@19.3.0";
-import { Button } from "https://esm.sh/@base-ui/react@1.9.0/button?deps=react@19.3.0,react-dom@19.3.0";
-import { Input } from "https://esm.sh/@base-ui/react@1.9.0/input?deps=react@19.3.0,react-dom@19.3.0";
-import { Checkbox } from "https://esm.sh/@base-ui/react@1.9.0/checkbox?deps=react@19.3.0,react-dom@19.3.0";
-import { Dialog } from "https://esm.sh/@base-ui/react@1.9.0/dialog?deps=react@19.3.0,react-dom@19.3.0";
+import React, { useState } from "react";
+import { Button } from "@base-ui/react/button";
+import { Input } from "@base-ui/react/input";
+import { Checkbox } from "@base-ui/react/checkbox";
+import { Dialog } from "@base-ui/react/dialog";
 import { API_KEY_STORAGE } from "../../helpers/storage.ts";
 
 export default function JevKeySettings(

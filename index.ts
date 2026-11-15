@@ -1,10 +1,10 @@
-import { H3 } from "https://esm.sh/h3@2.0.2";
+import { H3 } from "h3";
 import api from "./backend/api.ts";
-import { serveStatic } from "./backend/routes/static.ts";
 
-// Val Town invokes fetch directly; do not start a server inside an HTTP trigger.
-const app = new H3()
-  .all("/api/**", api.handler)
-  .get("/**", (event) => serveStatic(event.req, import.meta.url));
+// Static files in dist/ are served before the Worker runs, so only
+// /api/* and unknown paths reach this app.
+const app = new H3().all("/api/**", api.handler);
 
-export default app.fetch;
+export default {
+  fetch: (request: Request) => app.fetch(request),
+};

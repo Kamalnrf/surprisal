@@ -1,4 +1,4 @@
-import type { EditorSelection } from "https://esm.sh/@codemirror/state@6.7.6";
+import type { EditorSelection } from "@codemirror/state";
 import type { WritingDocument } from "../../../shared/variants.ts";
 import type { Heat } from "../../../shared/surprisal.ts";
 

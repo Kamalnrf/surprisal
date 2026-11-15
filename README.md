@@ -10,7 +10,9 @@ pushes away from it.
 
 The model is Qwen3 4B Base, hosted on Modal.
 
-Try it at https://surprisal.val.run
+Try it at https://surprisal.ink
+
+![Surprisal reading a paragraph: warm words, an underlined stock phrase, and sentences rated in the margin](public/screenshot.webp)
 
 ## How it works
 
@@ -29,20 +31,29 @@ and previous paragraph to the model, and rules send nearby writing to Jev.
 
 ## Run your own
 
-1. Remix this Val on Val Town.
-2. Run `setup.ts` once. It creates the database and prints a `PUBLIC_KEY`.
-3. Paste that key into `scorer.py` and run `modal deploy scorer.py` (needs a
-   Modal account).
-4. Set the Val's `SCORER_URL` environment variable to the URL Modal prints.
+It runs on Cloudflare Workers, deployed with [Alchemy](https://alchemy.run).
+You need [Bun](https://bun.sh), a Cloudflare account and a Modal account.
+
+1. Run `bun install`, then `modal deploy scorer.py`.
+2. Set `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` and `SCORER_URL` (the URL
+   Modal printed). Add `SURPRISAL_DOMAIN` for a domain on your Cloudflare
+   account.
+3. Run `bun run deploy`. It prints a `scorerPublicKey`.
+4. Put that key in `PUBLIC_KEYS` in `scorer.py` and run `modal deploy scorer.py`
+   again.
+
+The editor's font, Codelia, is licensed and not in this repo. Put your own
+`codelia.otf` in `public/`, or it falls back to your system's monospace.
 
 ## Code
 
 - `frontend/` the editor, in React and CodeMirror
-- `backend/` the Val's API: `/api/surprisal` and `/api/annotate`
+- `index.ts` and `backend/` the Worker's API: `/api/surprisal` and
+  `/api/annotate`
 - `shared/` parsing and scoring used by both
-- `scorer.py` the Modal app that runs the model (`modal deploy scorer.py`)
+- `alchemy.run.ts` the Worker, its D1 database and the scorer's signing key
+- `scorer.py` the Modal app that runs the model
 
 ```sh
-deno task check
-deno task test
+bun run check
 ```

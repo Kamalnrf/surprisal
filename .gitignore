@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.alchemy/
+.env
+__pycache__/
+# Codelia is a licensed font (Tabular Type Foundry); keep it out of the public repo.
+public/codelia.otf

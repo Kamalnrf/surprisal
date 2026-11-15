@@ -1,6 +1,5 @@
-/** @jsxImportSource https://esm.sh/react@19.3.0 */
-import React from "https://esm.sh/react@19.3.0";
-import { Button } from "https://esm.sh/@base-ui/react@1.9.0/button?deps=react@19.3.0,react-dom@19.3.0";
+import React from "react";
+import { Button } from "@base-ui/react/button";
 import type { SurprisalRun } from "../../hooks/use-surprisal.ts";
 import { odds, type Temperature } from "../../../shared/surprisal.ts";
 

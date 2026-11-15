@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "https://esm.sh/react@19.3.0";
+import { useEffect, useRef, useState } from "react";
 import { readSurprisal } from "../helpers/surprisal.ts";
 import { cacheGet, cacheSet } from "../helpers/cache.ts";
 import type { SurprisalResult } from "../../shared/types.ts";
