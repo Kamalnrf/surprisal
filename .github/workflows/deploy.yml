@@ -16,11 +16,12 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # The account ID and domain aren't secret; they may be Actions variables or secrets.
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
       SCORER_URL: ${{ secrets.SCORER_URL }}
-      SURPRISAL_DOMAIN: ${{ vars.SURPRISAL_DOMAIN }}
+      SURPRISAL_DOMAIN: ${{ vars.SURPRISAL_DOMAIN || secrets.SURPRISAL_DOMAIN }}
     steps:
       - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
@@ -31,7 +32,6 @@ jobs:
       # Codelia is licensed and not in the repo. Carry over the copy the live
       # site already serves, so a deploy doesn't drop it from the assets.
       - name: Fetch the editor font
-        if: env.SURPRISAL_DOMAIN != ''
         run: |
           curl -fsS -o public/codelia.otf "https://$SURPRISAL_DOMAIN/codelia.otf" || {
             rm -f public/codelia.otf
