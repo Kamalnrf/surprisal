@@ -1,0 +1,40 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# One deploy at a time; a newer push waits instead of cancelling a deploy halfway.
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      SCORER_URL: ${{ secrets.SCORER_URL }}
+      SURPRISAL_DOMAIN: ${{ vars.SURPRISAL_DOMAIN }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.4
+      - run: bun install --frozen-lockfile
+      - run: bun run check
+      # Codelia is licensed and not in the repo. Carry over the copy the live
+      # site already serves, so a deploy doesn't drop it from the assets.
+      - name: Fetch the editor font
+        if: env.SURPRISAL_DOMAIN != ''
+        run: |
+          curl -fsS -o public/codelia.otf "https://$SURPRISAL_DOMAIN/codelia.otf" || {
+            rm -f public/codelia.otf
+            echo "::warning::No codelia.otf on $SURPRISAL_DOMAIN; the editor falls back to monospace."
+          }
+      - run: bun run deploy --yes --no-input
