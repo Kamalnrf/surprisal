@@ -1,0 +1,44 @@
+name: Quire · Write and score
+
+# Checks surprisal.ink after each successful prod deploy, nightly, and on demand.
+on:
+  workflow_run:
+    workflows: [Deploy]
+    types: [completed]
+    branches: [main]
+  schedule:
+    - cron: "30 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quire-write-and-score
+  cancel-in-progress: true
+
+jobs:
+  quire:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # The commit that was deployed; Quire reads the commits since the Trail's previous Run.
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          fetch-depth: 0
+
+      - name: Run Quire
+        uses: quireco/quire-action@v1
+        with:
+          api-token: ${{ secrets.QUIRE_API_TOKEN }}
+          trail: write-and-score
+          url: https://surprisal.ink
+          context: main
+          request: >-
+            Open https://surprisal.ink, finish or skip onboarding, and write a two- or three-sentence paragraph.
+            Wait for scoring, then click a warm word, then reload the page. Checks: (1) typed text appears and the
+            word count updates; (2) the Surprisal panel rates each sentence expected, half-expected or unexpected;
+            (3) clicking a word shows what the model expected; (4) after the reload the writing is still there;
+            (5) no error alerts appear. Report allowance or rate-limit messages as blocked.
